@@ -2,7 +2,7 @@
 
 RAG chat over **all** GitHub repositories owned by `fitzyracing1` (except the mega-snapshot repo `fitzyracing1/fitzyracing1` by default).
 
-Stack: Next.js App Router + TypeScript, OpenAI-compatible embeddings/chat, local JSONL vector store with cosine retrieval, streaming NDJSON chat API, citation UI.
+Stack: Next.js App Router + TypeScript, local hashed embeddings + extractive answers by default (no API key), optional OpenAI/Ollama, JSONL vector store, streaming chat UI with citations.
 
 ## Setup
 
@@ -10,8 +10,8 @@ Stack: Next.js App Router + TypeScript, OpenAI-compatible embeddings/chat, local
 git clone https://github.com/fitzyracing1/fitzy-code-chat.git
 cd fitzy-code-chat
 cp .env.example .env
-# edit .env — set OPENAI_API_KEY (and optionally OPENAI_BASE_URL / models)
-# GitHub: set GITHUB_TOKEN/GH_TOKEN or rely on `gh auth token`
+# Local mode needs NO OpenAI key. GitHub: set GITHUB_TOKEN/GH_TOKEN or rely on gh auth token
+# Optional: OPENAI_API_KEY or OLLAMA_BASE_URL for synthesized answers
 npm install
 ```
 
@@ -63,7 +63,9 @@ npm run build && npm start
 
 | Variable | Purpose |
 |---|---|
-| `OPENAI_API_KEY` | Required for embeddings + chat |
+| `RAG_PROVIDER` | `local` (default) / `openai` / `ollama` |
+| `OPENAI_API_KEY` | Optional — enables OpenAI mode |
+| `OLLAMA_BASE_URL` | Optional — enables Ollama mode |
 | `OPENAI_BASE_URL` | Optional OpenAI-compatible base URL |
 | `OPENAI_MODEL` | Chat model (default `gpt-4o-mini`) |
 | `EMBEDDING_MODEL` | Embedding model (default `text-embedding-3-small`) |

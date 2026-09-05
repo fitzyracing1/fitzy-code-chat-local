@@ -125,8 +125,9 @@ async function main() {
     if (listOnly) return;
   }
 
-  if (!dryRun && !config.openaiApiKey) {
-    throw new Error("OPENAI_API_KEY required for embedding (or use --dry-run / --list)");
+  console.log("RAG provider: " + config.ragProvider);
+  if (!dryRun && config.ragProvider === "openai" && !config.openaiApiKey) {
+    throw new Error("OPENAI_API_KEY required when RAG_PROVIDER=openai (or use local mode / --dry-run / --list)");
   }
 
   const selected = onlyRepo ? repos.filter((r) => r.name === onlyRepo) : repos;
